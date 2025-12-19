@@ -1,6 +1,9 @@
 <?php
 
-use Models\Database;
+namespace Models;
+
+use Exception;
+use PDO;
 
 class Relation_transaction extends Database
 {

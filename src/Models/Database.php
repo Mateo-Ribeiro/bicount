@@ -15,8 +15,8 @@ class Database
 		try {
 			if (is_null(self::$instance)) {
 				self::$instance = new PDO('mysql:host=mysql-con;dbname=database;charset=utf8', 'user', 'password');
-				$this->db = self::$instance;
 			}
+			$this->db = self::$instance;
 		} catch (Exception $e) {
 			die('Erreur : ' . $e->getMessage());
 		}
