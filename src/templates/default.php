@@ -12,6 +12,14 @@
 </head>
 
 <body>
+	<div id="nav">
+		<div>
+			<a href="/"><img src="assets/images/bicount_logo.jpg" alt="home"></a>
+		</div>
+		<div id="connect">
+			<button id="btnconnect" onclick="window.location.href = '/connexion';">Connexion</button>
+		</div>
+	</div>
 	<main>
 		<?= $content ?>
 	</main>
