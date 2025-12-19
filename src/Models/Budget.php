@@ -1,6 +1,10 @@
 <?php
 
-use Models\Database;
+namespace Models;
+
+use Exception;
+use PDO;
+
 
 class Budget extends Database
 {
@@ -23,7 +27,8 @@ class Budget extends Database
 		}
 	}
 
-	public function getIdByName() {
+	public function getIdByName()
+	{
 		$queryExecute = $this->db->prepare("SELECT id FROM `BUDGETS` WHERE name = :name");
 		$queryExecute->bindValue(':name', $this->name, PDO::PARAM_STR);
 		$queryExecute->execute();

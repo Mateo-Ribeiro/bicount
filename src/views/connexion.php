@@ -18,7 +18,7 @@
     </div>
     <h1>Connexion</h1>
     <div id="connexion">
-        <form action="" method="POST">
+        <form id="login" action="" method="POST">
             <label for="login_email">Email</label>
             <input id="login_email" type="email" name="login_email" placeholder="Email" required>
 

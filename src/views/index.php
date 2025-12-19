@@ -11,27 +11,29 @@ $user->setEmail($_COOKIE['email']);
 $user->setPassword($_COOKIE['password']);
 ?>
 
+<body>
+	<?php foreach ($budgets as $budget) { ?>
+		<a href="../controllers/budgetController.php" name="id" value=<?= $budget['id'] ?>>
+			<div class="card">
+				<?php echo $budget['name']; ?>
+			</div>
+		</a>
+	<?php } ?>
 
-<?php foreach ($budgets as $budget) { ?>
-	<div class="card">
-		<?php echo $budget['id']; ?>
+	<button class="btn-open" id="openPopup">Créer un nouveau bicount</button>
+
+	<div class="popup-overlay" id="popupOverlay">
+		<div class="popup">
+			<button class="close-x" id="closeX">&times;</button>
+			<h2>Créer un bicount</h2>
+			<form action="" method="POST">
+				<label for="name">Nom du bicount</label>
+				<input id="name" type="text" name="name" placeholder="Nom du bicount" required>
+				<button name="btn-create" class="btn-create" id="closePopup">Créer</button>
+			</form>
+		</div>
 	</div>
-<?php } ?>
-
-<button class="btn-open" id="openPopup">Créer un nouveau bicount</button>
-
-<div class="popup-overlay" id="popupOverlay">
-	<div class="popup">
-		<button class="close-x" id="closeX">&times;</button>
-		<h2>Créer un bicount</h2>
-		<form action="" method="POST">
-			<label for="name">Nom du bicount</label>
-			<input id="name" type="text" name="name" placeholder="Nom du bicount" required>
-			<button name="btn-create" class="btn-create" id="closePopup">Créer</button>
-		</form>
-	</div>
-</div>
-
+</body>
 <script>
 	const openBtn = document.getElementById('openPopup');
 	const closeBtn = document.getElementById('closePopup');
