@@ -40,7 +40,7 @@ class Transaction extends Database
 
 	public function register()
 	{
-		$queryExecute = $this->db->prepare("INSERT INTO `BUDGETS`(`amount`,`user_id`) 
+		$queryExecute = $this->db->prepare("INSERT INTO `TRANSACTION`(`amount`,`user_id`) 
 			VALUES (:amount,:user_id)");
 
 		$queryExecute->bindValue(':amount', $this->amount, PDO::PARAM_STR);

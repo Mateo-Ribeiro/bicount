@@ -39,7 +39,7 @@ class Relation_transaction extends Database
 
 	public function register()
 	{
-		$queryExecute = $this->db->prepare("INSERT INTO `BUDGETS`(`budget_id`,`transaction_id`) 
+		$queryExecute = $this->db->prepare("INSERT INTO `RELATION_TRANSACTIONS`(`budget_id`,`transaction_id`) 
 			VALUES (:budget_id,:transaction_id)");
 
 		$queryExecute->bindValue(':transaction_id', $this->transaction_id, PDO::PARAM_STR);

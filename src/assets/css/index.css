@@ -1,0 +1,109 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	padding: 50px;
+	background: #f0f0f0;
+}
+
+.btn-open {
+	padding: 12px 24px;
+	background: #007bff;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background 0.3s;
+}
+
+.btn-open:hover {
+	background: #0056b3;
+}
+
+/* Overlay sombre derrière le popup */
+.popup-overlay {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	z-index: 999;
+}
+
+.popup-overlay.active {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* Le popup lui-même */
+.popup {
+	background: white;
+	padding: 30px;
+	border-radius: 10px;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+	max-width: 500px;
+	width: 90%;
+	position: relative;
+	animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateY(-50px);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+.popup h2 {
+	margin-bottom: 15px;
+	color: #333;
+}
+
+.popup p {
+	margin-bottom: 20px;
+	color: #666;
+	line-height: 1.6;
+}
+
+.btn-create {
+	padding: 10px 20px;
+	background: blue;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background 0.3s;
+}
+
+.btn-close:hover {
+	background: rgb(14, 14, 127);
+}
+
+/* Bouton X en haut à droite */
+.close-x {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	font-size: 28px;
+	color: #999;
+	cursor: pointer;
+	border: none;
+	background: none;
+	transition: color 0.3s;
+}
+
+.close-x:hover {
+	color: #333;
+}

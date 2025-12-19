@@ -1,35 +1,40 @@
 <?php
 
+use Models\User;
+
+session_start();
+
+$user = new User;
+$user->setName($_COOKIE['name']);
+$user->setEmail($_COOKIE['email']);
+$user->setPassword($_COOKIE['password']);
+
+
 $error = [];
 
-if (!empty($_POST)) {
-	$user = new Models\User();
+$id = $user->getUserByEmail();
 
-	try {
-		$user->setUsername($_POST['username']);
-	} catch (\Exception $e) {
-		$error['username'] = $e->getMessage();
-	}
-	try {
-		$user->setEmail($_POST['email']);
-	} catch (\Exception $e) {
-		$error['email'] = $e->getMessage();
-	}
-	try {
-		$user->setPassword($_POST['password']);
-	} catch (\Exception $e) {
-		$error['password'] = $e->getMessage();
-	}
+$budgets = $user->getUserBudget($id[0]['id']);
 
-	if (empty($error)) {
-		if ($user->register()) {
-			redirectTo('/');
-		} else {
-			$error['global'] = 'Echec de l\'enregistrement';
+if (isset($_POST['btn-create'])) {
+	$newbudget = new Budget;
+	try {
+		$newbudget->setName($_POST['name']);
+	} catch (\Exception $e) {
+		$error['name'] = $e->getMessage();
+	}
+	if (!isset($error['name'])) {
+		if ($newbudget->register()) {
+			$relation = new relation_budget;
+			$relation->setUser_id($id);
+			$relation->setBudget_id(end($newbudget->getIdByName())['id']);
 		}
 	}
 }
 
+
+
 render('index', false, [
 	'error' => $error,
+	'budgets' => $budgets
 ]);
