@@ -13,7 +13,7 @@ $user->setPassword($_COOKIE['password']);
 
 <body>
 	<?php foreach ($budgets as $budget) { ?>
-		<a href="../controllers/budgetController.php" name="id" value=<?= $budget['id'] ?>>
+		<a href="budget" name="id" value=<?= $budget['id'] ?>>
 			<div class="card">
 				<?php echo $budget['name']; ?>
 			</div>
