@@ -2,6 +2,8 @@
 
 use Models\User;
 
+use Models\relation_budget;
+
 use Models\Budget;
 
 session_start();
@@ -19,7 +21,7 @@ $id = $user->getUserByEmail();
 $budgets = $user->getUserBudget($id[0]['id']);
 
 if (isset($_POST['btn-create'])) {
-	$newbudget = new Models\Budget;
+	$newbudget = new Budget;
 	try {
 		$newbudget->setName($_POST['name']);
 	} catch (\Exception $e) {
@@ -28,8 +30,11 @@ if (isset($_POST['btn-create'])) {
 	if (!isset($error['name'])) {
 		if ($newbudget->register()) {
 			$relation = new relation_budget;
-			$relation->setUser_id($id);
-			$relation->setBudget_id(end($newbudget->getIdByName())['id']);
+			$relation->setUser_id($id[0]['id']);
+			$chiant = $newbudget->getIdByName();
+			$budgetId = end($chiant)['id'];
+			$relation->setBudget_id($budgetId);
+			$relation->register();
 		}
 	}
 }

@@ -55,15 +55,17 @@ class User extends Database
 		}
 	}
 
-	public function getNameByEmail() {
+	public function getNameByEmail()
+	{
 		$queryExecute = $this->db->prepare("SELECT name FROM `USERS` WHERE email = :email");
 		$queryExecute->bindValue(':email', $this->email, PDO::PARAM_STR);
 		$queryExecute->execute();
 
 		return $queryExecute->fetchAll();
 	}
-	
-	public function getUserByEmail() {
+
+	public function getUserByEmail()
+	{
 		$queryExecute = $this->db->prepare("SELECT id FROM `USERS` WHERE email = :email");
 		$queryExecute->bindValue(':email', $this->email, PDO::PARAM_STR);
 		$queryExecute->execute();
@@ -71,7 +73,8 @@ class User extends Database
 		return $queryExecute->fetchAll();
 	}
 
-	public function getPasswordByEmail() {
+	public function getPasswordByEmail()
+	{
 		$queryExecute = $this->db->prepare("SELECT password FROM `USERS` WHERE email = :email");
 		$queryExecute->bindValue(':email', $this->email, PDO::PARAM_STR);
 		$queryExecute->execute();
@@ -90,10 +93,12 @@ class User extends Database
 
 	public function register()
 	{
-		$queryExecute = $this->db->prepare("INSERT INTO `USERS`(`name`) 
-			VALUES (:name)");
+		$queryExecute = $this->db->prepare("INSERT INTO `USERS`(`name`, `email`, `password`) 
+        VALUES (:name, :email, :password)");
 
 		$queryExecute->bindValue(':name', $this->name, PDO::PARAM_STR);
+		$queryExecute->bindValue(':email', $this->email, PDO::PARAM_STR);
+		$queryExecute->bindValue(':password', $this->password, PDO::PARAM_STR);
 
 		return $queryExecute->execute();
 	}

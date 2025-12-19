@@ -1,6 +1,9 @@
 <?php
 
-use Models\Database;
+namespace Models;
+
+use Exception;
+use PDO;
 
 class relation_budget extends Database
 {
@@ -27,7 +30,7 @@ class relation_budget extends Database
 		return $this->budget_id;
 	}
 
-	public function setBudget_id($avlue)
+	public function setBudget_id($value)
 	{
 		if (empty($value)) throw new Exception('amount is required');
 		if (preg_match('/^[0-9]+$/', $value)) {
