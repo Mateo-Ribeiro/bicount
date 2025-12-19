@@ -28,7 +28,8 @@ class Budget extends Database
 		}
 	}
 
-	public function getIdByName() {
+	public function getIdByName()
+	{
 		$queryExecute = $this->db->prepare("SELECT id FROM `BUDGETS` WHERE name = :name");
 		$queryExecute->bindValue(':name', $this->name, PDO::PARAM_STR);
 		$queryExecute->execute();
