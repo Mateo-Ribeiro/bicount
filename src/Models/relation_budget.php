@@ -39,7 +39,7 @@ class relation_budget extends Database
 
 	public function register()
 	{
-		$queryExecute = $this->db->prepare("INSERT INTO `BUDGETS`(`user_id`,`budget_id`) 
+		$queryExecute = $this->db->prepare("INSERT INTO `RELATION_BUDGET`(`user_id`,`budget_id`) 
 			VALUES (:user_id,:budget_id)");
 
 		$queryExecute->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
