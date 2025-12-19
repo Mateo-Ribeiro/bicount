@@ -1,6 +1,9 @@
 <?php
+namespace Models;
 
-use Models\Database;
+use Exception;
+use PDO;
+
 
 class Transaction extends Database
 {
