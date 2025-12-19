@@ -1,6 +1,11 @@
 <?php
 
-use Models\Database;
+
+namespace Models;
+
+use Exception;
+use PDO;
+
 
 class Budget extends Database
 {
@@ -39,5 +44,13 @@ class Budget extends Database
 		$queryExecute->bindValue(':name', $this->name, PDO::PARAM_STR);
 
 		return $queryExecute->execute();
+	}
+
+	public function getBudgetTransaction($id)
+	{
+		$queryExecute = $this->db->prepare("SELECT * FROM `BUDGETS` JOIN `RELATION_TRANSACTION`,`TRANSACTION` WHERE TRANSACTION.id=RELATION_TRANSACTION.transaction_id AND RELATION_TRANSACTION.budget_id=BUDGETS.id AND BUDGETS.id=:id");
+		$queryExecute->bindValue(':id', $id, PDO::PARAM_STR);
+		$queryExecute->execute();
+		return $queryExecute->fetchAll();
 	}
 }
