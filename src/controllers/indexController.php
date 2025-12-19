@@ -2,8 +2,6 @@
 
 use Models\User;
 
-use Models\relation_budget;
-
 use Models\Budget;
 
 session_start();
@@ -21,7 +19,7 @@ $id = $user->getUserByEmail();
 $budgets = $user->getUserBudget($id[0]['id']);
 
 if (isset($_POST['btn-create'])) {
-	$newbudget = new Budget;
+	$newbudget = new Models\Budget;
 	try {
 		$newbudget->setName($_POST['name']);
 	} catch (\Exception $e) {
