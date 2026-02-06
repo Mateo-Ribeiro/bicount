@@ -1,45 +1,74 @@
 <?php
 
-use Models\User;
-
-use Models\Budget;
-
-session_start();
-
-$user = new User;
-$user->setName($_COOKIE['name']);
-$user->setEmail($_COOKIE['email']);
-$user->setPassword($_COOKIE['password']);
-
-
 $error = [];
 
-$id = $user->getUserByEmail();
+if (isset($_POST['register'])) {
+    $user = new Models\User();
 
-$budgets = $user->getUserBudget($id[0]['id']);
+    try {
+        $user->setName($_POST['name']);
+    } catch (\Exception $e) {
+        $error['name'] = $e->getMessage();
+    }
+    try {
+        $user->setEmail($_POST['email']);
+    } catch (\Exception $e) {
+        $error['email'] = $e->getMessage();
+    }
+    try {
+        $user->setPassword($_POST['password']);
+    } catch (\Exception $e) {
+        $error['password'] = $e->getMessage();
+    }
 
-if (isset($_POST['btn-create'])) {
-	$newbudget = new Models\Budget;
-	try {
-		$newbudget->setName($_POST['name']);
-	} catch (\Exception $e) {
-		$error['name'] = $e->getMessage();
-	}
-	if (!isset($error['name'])) {
-		if ($newbudget->register()) {
-			$relation = new relation_budget;
-			$relation->setUser_id($id[0]['id']);
-			$chiant = $newbudget->getIdByName();
-			$budgetId = end($chiant)['id'];
-			$relation->setBudget_id($budgetId);
-			$relation->register();
-		}
-	}
+    if (empty($error)) {
+        if ($user->register()) {
+            setcookie('name', $user->getName(), time() + 3600, '/');
+            setcookie('email', $user->getEmail(), time() + 3600, '/');
+            setcookie('password', $user->getPassword(), time() + 3600, '/');
+            redirectTo('/');
+            exit;
+        } else {
+            $error['global'] = 'Echec de l\'enregistrement';
+        }
+    }
+} elseif (isset($_POST['login'])) {
+    $user = new Models\User();
+
+    try {
+        $user->setEmail($_POST['login_email']);
+    } catch (\Exception $e) {
+        $error['login_email'] = $e->getMessage();
+    }
+    $verif = $user->getUserByEmail();
+
+    if (count($verif) == 0) {
+        $error['login_email'] = 'Email not found';
+    }
+    try {
+        $user->setPassword($_POST['login_password']);
+    } catch (\Exception $e) {
+        $error['login_password'] = $e->getMessage();
+    }
+    $verif2 = $user->getPasswordByEmail();
+
+    if (count($verif2) == 0) {
+        $error['login_password'] = 'Password incorrect';
+    }
+    if (empty($error)) {
+        $name = $user->getNameByEmail();
+        $user->setName($name[0]['name']);
+        setcookie('name', $user->getName(), time() + 3600, '/');
+        setcookie('email', $user->getEmail(), time() + 3600, '/');
+        setcookie('password', $user->getPassword(), time() + 3600, '/');
+        redirectTo('/home');
+        exit;
+    } else {
+        $error['global'] = 'Echec de la connexion';
+    }
 }
 
-
-
 render('index', false, [
-	'error' => $error,
-	'budgets' => $budgets
+    'error' => $error,
+    'user' => isset($user) ? $user : ''
 ]);
